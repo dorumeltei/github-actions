@@ -1,4 +1,4 @@
-name: Homework Demo - Firebase Project File Check
+name: Firebase Project File Check
 
 on:
   # Run automatically when code is pushed to the main branch.
