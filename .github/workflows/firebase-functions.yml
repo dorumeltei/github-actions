@@ -1,19 +1,35 @@
-name: Firebase Functions CI/CD
+name: Homework Demo - Firebase Project File Check
+
 on:
+  # Run automatically when code is pushed to the main branch.
   push:
     branches:
       - main
+  # Allow the workflow to be started manually from the GitHub Actions tab.
+  workflow_dispatch:
+
 jobs:
-  deploy:
+  repository-inspection-demo:
+    # The job runs on GitHub's Ubuntu runner.
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      # This step downloads the repository files into the runner.
+      - name: Step 1 - Download the repository code
         uses: actions/checkout@v4
-      - name: Install Firebase Tools
-        run: npm install -g firebase-tools
-      - name: Authenticate with Firebase
-        run: firebase login:ci --no-localhost --token $
-      - name: Install Dependencies
-        run: npm install
-      - name: Deploy Firebase Functions
-        run: firebase deploy --only functions
+
+      # This step shows the top-level files so we can confirm the workflow
+      # can access the project contents in the CI environment.
+      - name: Step 2 - List top-level project files
+        run: ls -la
+
+      # This step prints Firebase configuration and lists function files.
+      # It demonstrates how a workflow can inspect project resources before
+      # later tasks such as testing, building, or deployment.
+      - name: Step 3 - Display Firebase configuration and functions files
+        run: |
+          echo "firebase.json contents:"
+          cat firebase.json
+          echo
+          echo "functions directory contents:"
+          find functions -maxdepth 2 -type f | sort
